@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ribeiroart1 | Analytics & BI Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #f9f9f9;
+      --text: #1a1a1a;
+      --muted: #555;
+      --line: #e6e6e6;
+      --card: #ffffff;
+      --link: #0a66c2;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 18px 72px;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin: 0 0 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 22px;
+    }
+
+    .lead {
+      max-width: 900px;
+      margin: 0 0 18px;
+      color: #2a2a2a;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover { text-decoration: underline; }
+
+    .top-links {
+      margin-top: 10px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      margin-top: 58px;
+      margin-bottom: 14px;
+      font-size: 1.55rem;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 18px 10px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 1.12rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card .meta {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Standardized embed box */
+    .embed {
+      width: 100%;
+      height: 720px;              /* ✅ same height for everything */
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    /* Tableau container to keep it consistent */
+    .tableau-wrap {
+      width: 100%;
+      height: 720px;              /* ✅ same height */
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    footer {
+      margin-top: 70px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    /* Small screens */
+    @media (max-width: 640px) {
+      .embed, .tableau-wrap { height: 560px; }
+      h1 { font-size: 2.05rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Arthur Hugo Ribeiro</h1>
+    <div class="subtitle">Senior Analytics Engineer · Data Analytics · Business Intelligence</div>
+
+    <p class="lead">
+      This page showcases selected interactive dashboards built with Power BI and Tableau.
+      Each dashboard is designed to support executive decision-making through clear KPIs,
+      trend analysis, and data storytelling.
+    </p>
+
+    <div class="top-links">
+      <a href="https://github.com/Ribeiroart1/data-projects" target="_blank" rel="noopener">
+        GitHub Portfolio (Python Projects)
+      </a>
+      <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a>
+    </div>
+
+    <h2 class="section-title">Interactive Dashboards</h2>
+
+    <div class="grid">
+
+      <!-- 1 -->
+      <div class="card">
+        <h3>1) Stats About Unemployment (2005–2015)</h3>
+        <p class="meta">Power BI Dashboard</p>
+        <iframe
+          class="embed"
+          title="Stats About Unemployment (2005–2015) - Power BI"
+          src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZmE4MDhiYzctMzk2OS00NDA1LTlkYWMtZGU0MjBmZTdlNjdhIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
+          allowfullscreen="true">
+        </iframe>
+      </div>
+
+      <!-- 2 -->
+      <div class="card">
+        <h3>2) Delivery Data in Brazil</h3>
+        <p class="meta">Power BI Dashboard</p>
+        <iframe
+          class="embed"
+          title="Delivery Data in Brazil - Power BI"
+          src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZjZjMWIzYTgtYTZlZC00MTE5LWI1YTgtMjBlMmI1MjAzMzEwIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
+          allowfullscreen="true">
+        </iframe>
+      </div>
+
+      <!-- 3 Tableau (simplified embed) -->
+      <div class="card">
+        <h3>3) Real Estate Sales (2001–2020)</h3>
+        <p class="meta">Tableau Dashboard</p>
+
+        <div class="tableau-wrap">
+          <iframe
+            class="embed"
+            title="Real Estate Sales (2001–2020) - Tableau"
+            src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:language=pt-BR&:toolbar=yes"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="card">
+        <h3>4) Stats About UK Bank Customers</h3>
+        <p class="meta">Power BI Dashboard</p>
+        <iframe
+          class="embed"
+          title="Stats About UK Bank Customers - Power BI"
+          src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYjBmYjUxNGQtYTJjNC00NzE4LTkwNGQtNDExYWIzNDNhOWIyIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
+          allowfullscreen="true">
+        </iframe>
+      </div>
+
+    </div>
+
+    <footer>
+      <div>📍 São Paulo, Brazil</div>
+      <div>📧 <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a></div>
+    </footer>
+  </div>
+</body>
+</html>
