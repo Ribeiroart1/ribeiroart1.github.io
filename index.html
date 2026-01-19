@@ -1,138 +1,343 @@
-<!-- ============ Tech Stack Section (Badges) ============ -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Arthur Araujo – Everydata IT | Analytics & BI Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<section class="tech-section">
-  <h1 class="tech-title">Data Analytics Portfolio Projects</h1>
-  <div class="tech-divider"></div>
+  <style>
+    :root{
+      --bg:#0b0f16;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,0.72);
+      --line:rgba(255,255,255,0.16);
+      --card:#0f1623;
+      --cardLine:rgba(255,255,255,0.10);
+      --link:#64b5ff;
+    }
 
-  <h2 class="tech-subtitle">Tech stack</h2>
-  <div class="tech-divider thin"></div>
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(100,181,255,0.12), transparent 50%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(255,54,33,0.10), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
 
-  <div id="techBadges" class="tech-badges"></div>
-</section>
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 18px 72px;
+    }
 
-<style>
-  .tech-section{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 28px 18px 10px;
-    color: #fff;
-  }
+    h1{
+      font-size:clamp(34px,4.2vw,56px);
+      margin:0 0 10px;
+      letter-spacing:-0.02em;
+      font-weight:900;
+    }
 
-  .tech-title{
-    font-size: clamp(38px, 5vw, 64px);
-    font-weight: 800;
-    margin: 0 0 14px;
-    letter-spacing: -0.02em;
-  }
+    .subtitle{
+      color:var(--muted);
+      font-size:1.08rem;
+      margin-bottom:14px;
+      font-weight:650;
+    }
 
-  .tech-subtitle{
-    font-size: clamp(28px, 3vw, 44px);
-    font-weight: 800;
-    margin: 22px 0 14px;
-    letter-spacing: -0.02em;
-  }
+    .pill-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
 
-  .tech-divider{
-    height: 2px;
-    width: 100%;
-    background: rgba(255,255,255,0.16);
-    margin: 0 0 18px;
-  }
-  .tech-divider.thin{ height: 1px; }
+    .pill{
+      display:inline-block;
+      border:1px solid var(--cardLine);
+      background:rgba(255,255,255,0.06);
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:0.92rem;
+      color:rgba(255,255,255,0.88);
+      backdrop-filter: blur(8px);
+    }
 
-  .tech-badges{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-    padding: 14px 0 6px;
-  }
+    .lead{
+      max-width:920px;
+      margin:0 0 18px;
+      color:rgba(255,255,255,0.88);
+      font-size:1.03rem;
+    }
 
-  .badge{
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    border-radius: 0px; /* a imagem parece retangular (sem arredondar) */
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 15px;
-    line-height: 1;
-    border: 0;
-    user-select: none;
-    white-space: nowrap;
-  }
+    a{
+      color:var(--link);
+      text-decoration:none;
+      font-weight:750;
+    }
+    a:hover{ text-decoration:underline; }
 
-  .badge i{
-    font-size: 18px;
-    opacity: 0.95;
-  }
+    .top-links{
+      margin-top:10px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
 
-  /* Optional: make it look more "tile-like" */
-  .badge{
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
-  }
+    .section-title{
+      margin-top:58px;
+      margin-bottom:14px;
+      font-size:1.55rem;
+      border-bottom:2px solid var(--line);
+      padding-bottom:10px;
+      font-weight:900;
+      letter-spacing:-0.01em;
+    }
 
-  /* Mobile tweaks */
-  @media (max-width: 640px){
-    .badge{ font-size: 13px; padding: 10px 14px; }
-    .badge i{ font-size: 16px; }
-  }
-</style>
+    .divider{
+      height:1px;
+      width:100%;
+      background:var(--line);
+      margin: 16px 0 8px;
+    }
 
-<script>
-  // ✅ Removidos: Supabase, Markdown, Render, CSS3
-  // ✅ Adicionados: Databricks, Power Apps, Power Automate, MongoDB
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+      margin-top:18px;
+    }
 
-  const techStack = [
-    { name: "Python", icon: "fa-brands fa-python", bg: "#2b68a7" },
-    { name: "Postgres", icon: "fa-solid fa-database", bg: "#2e5e8a" },
-    { name: "MySQL", icon: "fa-solid fa-database", bg: "#123a77" },
-    { name: "Power BI", icon: "fa-solid fa-chart-column", bg: "#f2c811", color:"#111" },
-    { name: "Microsoft Excel", icon: "fa-solid fa-file-excel", bg: "#1d6f42" },
-    { name: "Microsoft PowerPoint", icon: "fa-solid fa-file-powerpoint", bg: "#b7472a" },
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid var(--cardLine);
+      border-radius:14px;
+      padding:18px 18px 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
 
-    { name: "Visual Studio Code", icon: "fa-solid fa-code", bg: "#007acc" },
-    { name: "R", icon: "fa-solid fa-r", bg: "#2d6db2" }, // fallback icon
-    { name: "Windows Terminal", icon: "fa-solid fa-terminal", bg: "#4a4a4a" },
-    { name: "Pandas", icon: "fa-solid fa-table", bg: "#2b1a78" },
-    { name: "GitHub", icon: "fa-brands fa-github", bg: "#111111" },
+    .card h3{
+      margin:0 0 6px;
+      font-size:1.12rem;
+      letter-spacing:-0.01em;
+      font-weight:900;
+    }
 
-    { name: "Streamlit", icon: "fa-solid fa-bolt", bg: "#ff4b4b" },
-    { name: "HTML5", icon: "fa-brands fa-html5", bg: "#e34f26" },
+    .card .meta{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:0.95rem;
+      font-weight:650;
+    }
 
-    { name: "PostgreSQL", icon: "fa-solid fa-database", bg: "#336791" },
-    { name: "Canva", icon: "fa-solid fa-pen-nib", bg: "#00c4cc" },
+    /* Standard frame for all embeds */
+    .frame{
+      border:1px solid var(--cardLine);
+      border-radius:12px;
+      overflow:hidden;
+      background:#000;
+    }
 
-    { name: "Plotly", icon: "fa-solid fa-chart-line", bg: "#3f4f75" },
-    { name: "Microsoft Office", icon: "fa-brands fa-microsoft", bg: "#d83b01" },
-    { name: "Microsoft Word", icon: "fa-solid fa-file-word", bg: "#2b579a" },
+    .embed{
+      width:100%;
+      height:720px;
+      border:0;
+      display:block;
+      background:#000;
+    }
 
-    // ✅ Added
-    { name: "Databricks", icon: "fa-solid fa-cubes", bg: "#ff3621" },
-    { name: "Power Apps", icon: "fa-brands fa-microsoft", bg: "#742774" },
-    { name: "Power Automate", icon: "fa-brands fa-microsoft", bg: "#0066ff" },
-    { name: "MongoDB", icon: "fa-solid fa-leaf", bg: "#13aa52" },
-  ];
+    /* Fix Tableau width (force full width/height) */
+    .tableau-container{
+      position:relative;
+      width:100%;
+      height:720px;
+      background:#000;
+    }
+    .tableau-container iframe{
+      position:absolute;
+      top:0; left:0;
+      width:100% !important;
+      height:100% !important;
+      border:0;
+    }
 
-  const container = document.getElementById("techBadges");
+    /* Tech stack badges */
+    .tech-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin:16px 0 28px;
+      align-items:center;
+    }
+    .badge{
+      padding:12px 16px;
+      font-weight:900;
+      font-size:13px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.06);
+    }
 
-  techStack.forEach(t => {
-    const el = document.createElement("span");
-    el.className = "badge";
-    el.style.background = t.bg;
-    if (t.color) el.style.color = t.color;
+    .python{background:#3776AB;}
+    .pandas{background:#150458;}
+    .r{background:#276DC3;}
 
-    const icon = document.createElement("i");
-    icon.className = t.icon;
+    .postgres{background:#336791;}
+    .mysql{background:#003B57;}
+    .mongodb{background:#13AA52;}
 
-    const label = document.createElement("span");
-    label.textContent = t.name;
+    .powerbi{background:#F2C811; color:#111;}
+    .tableau{background:#1F77B4;}
+    .databricks{background:#FF3621;}
 
-    el.appendChild(icon);
-    el.appendChild(label);
-    container.appendChild(el);
-  });
-</script>
+    .powerapps{background:#742774;}
+    .powerautomate{background:#0066FF;}
+
+    .streamlit{background:#FF4B4B;}
+    .plotly{background:#3F4F75;}
+
+    .vscode{background:#007ACC;}
+    .github{background:#111111;}
+    .excel{background:#1D6F42;}
+    .powerpoint{background:#B7472A;}
+    .terminal{background:#4D4D4D;}
+
+    footer{
+      margin-top:70px;
+      padding-top:28px;
+      border-top:1px solid var(--line);
+      color:rgba(255,255,255,0.72);
+      font-size:0.95rem;
+    }
+
+    @media (max-width:640px){
+      .embed, .tableau-container{height:560px;}
+      .badge{font-size:12px; padding:10px 14px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Arthur Araujo – Everydata IT</h1>
+    <div class="subtitle">Senior Analytics Engineer · Data Platforms · Business Intelligence</div>
+
+    <div class="pill-row">
+      <span class="pill">10+ years in Analytics Engineering</span>
+      <span class="pill">Power BI Community Partner (Brazil)</span>
+      <span class="pill">Power BI · Tableau · Python · SQL</span>
+    </div>
+
+    <p class="lead">
+      I design end-to-end analytics solutions—from data ingestion and modeling to executive dashboards
+      and applied machine learning. Explore the interactive dashboards below and visit my GitHub
+      repository to review Python notebooks and end-to-end projects.
+    </p>
+
+    <div class="top-links">
+      <a href="https://github.com/Ribeiroart1/Data-Projects-Portfolio" target="_blank" rel="noopener">
+        GitHub (Python Projects)
+      </a>
+      <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a>
+    </div>
+
+    <!-- TECH STACK -->
+    <h2 class="section-title">Tech stack</h2>
+
+    <div class="tech-badges">
+      <span class="badge python">Python</span>
+      <span class="badge pandas">Pandas</span>
+      <span class="badge r">R</span>
+
+      <span class="badge postgres">Postgres</span>
+      <span class="badge mysql">MySQL</span>
+      <span class="badge mongodb">MongoDB</span>
+
+      <span class="badge databricks">Databricks</span>
+      <span class="badge powerbi">Power BI</span>
+      <span class="badge tableau">Tableau</span>
+
+      <span class="badge powerapps">Power Apps</span>
+      <span class="badge powerautomate">Power Automate</span>
+
+      <span class="badge streamlit">Streamlit</span>
+      <span class="badge plotly">Plotly</span>
+
+      <span class="badge vscode">VS Code</span>
+      <span class="badge terminal">Windows Terminal</span>
+      <span class="badge github">GitHub</span>
+
+      <span class="badge excel">Microsoft Excel</span>
+      <span class="badge powerpoint">Microsoft PowerPoint</span>
+    </div>
+
+    <!-- DASHBOARDS -->
+    <h2 class="section-title">Interactive Dashboards</h2>
+
+    <div class="grid">
+      <!-- 1 -->
+      <div class="card">
+        <h3>1) Stats About Unemployment (2005–2015)</h3>
+        <p class="meta">Power BI Dashboard</p>
+        <div class="frame">
+          <iframe class="embed"
+            title="Stats About Unemployment (2005–2015) - Power BI"
+            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZmE4MDhiYzctMzk2OS00NDA1LTlkYWMtZGU0MjBmZTdlNjdhIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="card">
+        <h3>2) Delivery Data in Brazil</h3>
+        <p class="meta">Power BI Dashboard</p>
+        <div class="frame">
+          <iframe class="embed"
+            title="Delivery Data in Brazil - Power BI"
+            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZjZjMWIzYTgtYTZlZC00MTE5LWI1YTgtMjBlMmI1MjAzMzEwIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- 3 Tableau -->
+      <div class="card">
+        <h3>3) Real Estate Sales (2001–2020)</h3>
+        <p class="meta">Tableau Dashboard</p>
+        <div class="frame">
+          <div class="tableau-container">
+            <iframe
+              title="Real Estate Sales (2001–2020) - Tableau"
+              src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:language=pt-BR&:toolbar=yes"
+              allowfullscreen="true">
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="card">
+        <h3>4) Stats About UK Bank Customers</h3>
+        <p class="meta">Power BI Dashboard</p>
+        <div class="frame">
+          <iframe class="embed"
+            title="Stats About UK Bank Customers - Power BI"
+            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYjBmYjUxNGQtYTJjNC00NzE4LTkwNGQtNDExYWIzNDNhOWIyIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>📍 São Paulo, Brazil</div>
+      <div>📧 <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a></div>
+    </footer>
+  </div>
+</body>
+</html>
