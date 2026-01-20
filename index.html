@@ -19,9 +19,10 @@
     body{
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
       margin:0;
-      background: radial-gradient(1200px 600px at 10% 0%, rgba(100,181,255,0.12), transparent 50%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(255,54,33,0.10), transparent 50%),
-                  var(--bg);
+      background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(100,181,255,0.12), transparent 50%),
+        radial-gradient(900px 500px at 90% 10%, rgba(255,54,33,0.10), transparent 50%),
+        var(--bg);
       color:var(--text);
       line-height:1.6;
     }
@@ -29,7 +30,7 @@
     .container{
       max-width:1100px;
       margin:0 auto;
-      padding:56px 18px 72px;
+      padding:56px 18px 80px;
     }
 
     h1{
@@ -50,22 +51,21 @@
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-bottom:14px;
+      margin-bottom:16px;
     }
 
     .pill{
-      display:inline-block;
       border:1px solid var(--cardLine);
       background:rgba(255,255,255,0.06);
       border-radius:999px;
-      padding:7px 11px;
+      padding:7px 12px;
       font-size:0.92rem;
       color:rgba(255,255,255,0.88);
       backdrop-filter: blur(8px);
     }
 
     .lead{
-      max-width:920px;
+      max-width:940px;
       margin:0 0 18px;
       color:rgba(255,255,255,0.88);
       font-size:1.03rem;
@@ -79,49 +79,39 @@
     a:hover{ text-decoration:underline; }
 
     .top-links{
-      margin-top:10px;
       display:flex;
-      gap:14px;
+      gap:16px;
       flex-wrap:wrap;
-      align-items:center;
+      margin-top:10px;
     }
 
     .section-title{
-      margin-top:58px;
-      margin-bottom:14px;
+      margin-top:60px;
+      margin-bottom:16px;
       font-size:1.55rem;
       border-bottom:2px solid var(--line);
       padding-bottom:10px;
       font-weight:900;
-      letter-spacing:-0.01em;
-    }
-
-    .divider{
-      height:1px;
-      width:100%;
-      background:var(--line);
-      margin: 16px 0 8px;
     }
 
     .grid{
       display:grid;
       grid-template-columns:1fr;
-      gap:18px;
-      margin-top:18px;
+      gap:20px;
+      margin-top:20px;
     }
 
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
       border:1px solid var(--cardLine);
       border-radius:14px;
-      padding:18px 18px 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      padding:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.25);
     }
 
     .card h3{
       margin:0 0 6px;
       font-size:1.12rem;
-      letter-spacing:-0.01em;
       font-weight:900;
     }
 
@@ -132,7 +122,6 @@
       font-weight:650;
     }
 
-    /* Standard frame for all embeds */
     .frame{
       border:1px solid var(--cardLine);
       border-radius:12px;
@@ -145,66 +134,20 @@
       height:720px;
       border:0;
       display:block;
-      background:#000;
     }
 
-    /* Fix Tableau width (force full width/height) */
     .tableau-container{
       position:relative;
       width:100%;
       height:720px;
-      background:#000;
     }
     .tableau-container iframe{
       position:absolute;
-      top:0; left:0;
+      inset:0;
       width:100% !important;
       height:100% !important;
       border:0;
     }
-
-    /* Tech stack badges */
-    .tech-badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin:16px 0 28px;
-      align-items:center;
-    }
-    .badge{
-      padding:12px 16px;
-      font-weight:900;
-      font-size:13px;
-      letter-spacing:0.12em;
-      text-transform:uppercase;
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.08);
-      background:rgba(255,255,255,0.06);
-    }
-
-    .python{background:#3776AB;}
-    .pandas{background:#150458;}
-    .r{background:#276DC3;}
-
-    .postgres{background:#336791;}
-    .mysql{background:#003B57;}
-    .mongodb{background:#13AA52;}
-
-    .powerbi{background:#F2C811; color:#111;}
-    .tableau{background:#1F77B4;}
-    .databricks{background:#FF3621;}
-
-    .powerapps{background:#742774;}
-    .powerautomate{background:#0066FF;}
-
-    .streamlit{background:#FF4B4B;}
-    .plotly{background:#3F4F75;}
-
-    .vscode{background:#007ACC;}
-    .github{background:#111111;}
-    .excel{background:#1D6F42;}
-    .powerpoint{background:#B7472A;}
-    .terminal{background:#4D4D4D;}
 
     footer{
       margin-top:70px;
@@ -215,106 +158,74 @@
     }
 
     @media (max-width:640px){
-      .embed, .tableau-container{height:560px;}
-      .badge{font-size:12px; padding:10px 14px;}
+      .embed,.tableau-container{height:560px;}
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+
+    <!-- HEADER -->
     <h1>Arthur Araujo – Everydata IT</h1>
     <div class="subtitle">Senior Analytics Engineer · Data Platforms · Business Intelligence</div>
 
     <div class="pill-row">
       <span class="pill">10+ years in Analytics Engineering</span>
       <span class="pill">Power BI Community Partner (Brazil)</span>
-      <span class="pill">Power BI · Tableau · Python · SQL</span>
+      <span class="pill">Databricks · Power BI · Tableau · Python · SQL</span>
     </div>
 
     <p class="lead">
-      I design end-to-end analytics solutions—from data ingestion and modeling to executive dashboards
-      and applied machine learning. Explore the interactive dashboards below and visit my GitHub
-      repository to review Python notebooks and end-to-end projects.
+      I design and deliver end-to-end analytics solutions, from data ingestion and modeling
+      to executive dashboards and applied machine learning. This portfolio showcases
+      interactive dashboards and analytical storytelling projects developed using modern
+      analytics engineering and BI practices.
     </p>
 
     <div class="top-links">
-      <a href="https://github.com/Ribeiroart1/Data-Projects-Portfolio" target="_blank" rel="noopener">
-        GitHub (Python Projects)
-      </a>
+      <a href="https://github.com/Ribeiroart1/Data-Projects-Portfolio" target="_blank">GitHub · Python Projects</a>
       <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a>
     </div>
 
-    <!-- TECH STACK -->
-    <h2 class="section-title">Tech stack</h2>
-
-    <div class="tech-badges">
-      <span class="badge python">Python</span>
-      <span class="badge pandas">Pandas</span>
-      <span class="badge r">R</span>
-
-      <span class="badge postgres">Postgres</span>
-      <span class="badge mysql">MySQL</span>
-      <span class="badge mongodb">MongoDB</span>
-
-      <span class="badge databricks">Databricks</span>
-      <span class="badge powerbi">Power BI</span>
-      <span class="badge tableau">Tableau</span>
-
-      <span class="badge powerapps">Power Apps</span>
-      <span class="badge powerautomate">Power Automate</span>
-
-      <span class="badge streamlit">Streamlit</span>
-      <span class="badge plotly">Plotly</span>
-
-      <span class="badge vscode">VS Code</span>
-      <span class="badge terminal">Windows Terminal</span>
-      <span class="badge github">GitHub</span>
-
-      <span class="badge excel">Microsoft Excel</span>
-      <span class="badge powerpoint">Microsoft PowerPoint</span>
-    </div>
-
     <!-- DASHBOARDS -->
-    <h2 class="section-title">Interactive Dashboards</h2>
+    <h2 class="section-title">Interactive Dashboards & Storytelling</h2>
 
     <div class="grid">
+
       <!-- 1 -->
       <div class="card">
-        <h3>1) Stats About Unemployment (2005–2015)</h3>
-        <p class="meta">Power BI Dashboard</p>
+        <h3>1) Unemployment Statistics (2005–2015)</h3>
+        <p class="meta">Power BI · Labor Market Analytics</p>
         <div class="frame">
           <iframe class="embed"
-            title="Stats About Unemployment (2005–2015) - Power BI"
             src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZmE4MDhiYzctMzk2OS00NDA1LTlkYWMtZGU0MjBmZTdlNjdhIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
-            allowfullscreen="true">
+            allowfullscreen>
           </iframe>
         </div>
       </div>
 
       <!-- 2 -->
       <div class="card">
-        <h3>2) Delivery Data in Brazil</h3>
-        <p class="meta">Power BI Dashboard</p>
+        <h3>2) Delivery Operations Analytics (Brazil)</h3>
+        <p class="meta">Power BI · Operations & Logistics</p>
         <div class="frame">
           <iframe class="embed"
-            title="Delivery Data in Brazil - Power BI"
             src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZjZjMWIzYTgtYTZlZC00MTE5LWI1YTgtMjBlMmI1MjAzMzEwIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
-            allowfullscreen="true">
+            allowfullscreen>
           </iframe>
         </div>
       </div>
 
-      <!-- 3 Tableau -->
+      <!-- 3 -->
       <div class="card">
-        <h3>3) Real Estate Sales (2001–2020)</h3>
-        <p class="meta">Tableau Dashboard</p>
+        <h3>3) Real Estate Sales Analysis (2001–2020)</h3>
+        <p class="meta">Tableau · Sales & Market Trends</p>
         <div class="frame">
           <div class="tableau-container">
             <iframe
-              title="Real Estate Sales (2001–2020) - Tableau"
-              src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:language=pt-BR&:toolbar=yes"
-              allowfullscreen="true">
+              src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:toolbar=yes"
+              allowfullscreen>
             </iframe>
           </div>
         </div>
@@ -322,22 +233,40 @@
 
       <!-- 4 -->
       <div class="card">
-        <h3>4) Stats About UK Bank Customers</h3>
-        <p class="meta">Power BI Dashboard</p>
+        <h3>4) UK Banking Customers Analytics</h3>
+        <p class="meta">Power BI · Customer Analytics</p>
         <div class="frame">
           <iframe class="embed"
-            title="Stats About UK Bank Customers - Power BI"
             src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYjBmYjUxNGQtYTJjNC00NzE4LTkwNGQtNDExYWIzNDNhOWIyIiwidCI6IjZmMjMxNjIwLWFlOTAtNDc4ZC05MGZlLTZlOGNkMzRjOGRkZSJ9"
-            allowfullscreen="true">
+            allowfullscreen>
           </iframe>
         </div>
       </div>
+
+      <!-- 5 -->
+      <div class="card">
+        <h3>5) HR Attrition — Executive Storytelling</h3>
+        <p class="meta">Databricks · Analytics Engineering · Interactive HTML</p>
+
+        <div class="top-links" style="margin-bottom:10px">
+          <a href="reports/HR_Attrition_Storytelling.html" target="_blank">Open full analysis</a>
+        </div>
+
+        <div class="frame">
+          <iframe class="embed"
+            src="reports/HR_Attrition_Storytelling.html">
+          </iframe>
+        </div>
+      </div>
+
     </div>
 
+    <!-- FOOTER -->
     <footer>
       <div>📍 São Paulo, Brazil</div>
       <div>📧 <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a></div>
     </footer>
+
   </div>
 </body>
 </html>
