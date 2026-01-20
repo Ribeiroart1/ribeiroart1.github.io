@@ -96,6 +96,13 @@
       letter-spacing:-0.01em;
     }
 
+    .divider{
+      height:1px;
+      width:100%;
+      background:var(--line);
+      margin: 16px 0 8px;
+    }
+
     .grid{
       display:grid;
       grid-template-columns:1fr;
@@ -141,12 +148,21 @@
       background:#000;
     }
 
-    /* 🔒 Hard-lock Tableau iframe to full size */
-    iframe.embed.tableau-embed{
+    /* Tableau: force full width/height (strongest, most compatible) */
+    .tableau-container{
+      position:relative;
       width:100% !important;
-      height:720px !important;
-      display:block !important;
+      height:720px;
+      background:#000;
+      overflow:hidden;
+    }
+    .tableau-container iframe{
+      position:absolute;
+      top:0; left:0;
+      width:100% !important;
+      height:100% !important;
       border:0 !important;
+      display:block !important;
     }
 
     /* Tech stack badges */
@@ -201,8 +217,7 @@
     }
 
     @media (max-width:640px){
-      .embed{height:560px;}
-      iframe.embed.tableau-embed{height:560px !important;}
+      .embed, .tableau-container{height:560px;}
       .badge{font-size:12px; padding:10px 14px;}
     }
   </style>
@@ -229,11 +244,9 @@
       <a href="https://github.com/Ribeiroart1/Data-Projects-Portfolio" target="_blank" rel="noopener">
         GitHub (Python Projects)
       </a>
-
       <a href="https://www.linkedin.com/in/hribeiroarthur/" target="_blank" rel="noopener">
         LinkedIn
       </a>
-
       <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a>
     </div>
 
@@ -271,23 +284,9 @@
     <h2 class="section-title">Interactive Dashboards</h2>
 
     <div class="grid">
-
-      <!-- 1) DATABRICKS (FIRST) -->
+      <!-- 1 -->
       <div class="card">
-        <h3>1) HR Attrition — Executive Dashboard</h3>
-        <p class="meta">Databricks Storytelling (Interactive HTML)</p>
-        <div class="frame">
-          <iframe class="embed"
-            title="HR Attrition — Executive Dashboard"
-            src="./reports/HR_Attrition_Storytelling.html"
-            allowfullscreen="true">
-          </iframe>
-        </div>
-      </div>
-
-      <!-- 2 -->
-      <div class="card">
-        <h3>2) Stats About Unemployment (2005–2015)</h3>
+        <h3>1) Stats About Unemployment (2005–2015)</h3>
         <p class="meta">Power BI Dashboard</p>
         <div class="frame">
           <iframe class="embed"
@@ -298,9 +297,9 @@
         </div>
       </div>
 
-      <!-- 3 -->
+      <!-- 2 -->
       <div class="card">
-        <h3>3) Delivery Data in Brazil</h3>
+        <h3>2) Delivery Data in Brazil</h3>
         <p class="meta">Power BI Dashboard</p>
         <div class="frame">
           <iframe class="embed"
@@ -311,9 +310,9 @@
         </div>
       </div>
 
-      <!-- 4 -->
+      <!-- 3 -->
       <div class="card">
-        <h3>4) Stats About UK Bank Customers</h3>
+        <h3>3) Stats About UK Bank Customers</h3>
         <p class="meta">Power BI Dashboard</p>
         <div class="frame">
           <iframe class="embed"
@@ -324,17 +323,18 @@
         </div>
       </div>
 
-      <!-- 5) TABLEAU (LAST) -->
+      <!-- 4 Tableau (last) -->
       <div class="card">
-        <h3>5) Real Estate Sales (2001–2020)</h3>
+        <h3>4) Real Estate Sales (2001–2020)</h3>
         <p class="meta">Tableau Dashboard</p>
         <div class="frame">
-          <iframe
-            class="embed tableau-embed"
-            title="Real Estate Sales (2001–2020) - Tableau"
-            src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:embed=yes&:toolbar=yes&:language=pt-BR"
-            allowfullscreen="true">
-          </iframe>
+          <div class="tableau-container">
+            <iframe
+              title="Real Estate Sales (2001–2020) - Tableau"
+              src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:language=pt-BR&:toolbar=yes"
+              allowfullscreen="true">
+            </iframe>
+          </div>
         </div>
       </div>
 
