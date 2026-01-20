@@ -141,6 +141,14 @@
       background:#000;
     }
 
+    /* 🔒 Hard-lock Tableau iframe to full size */
+    iframe.embed.tableau-embed{
+      width:100% !important;
+      height:720px !important;
+      display:block !important;
+      border:0 !important;
+    }
+
     /* Tech stack badges */
     .tech-badges{
       display:flex;
@@ -194,6 +202,7 @@
 
     @media (max-width:640px){
       .embed{height:560px;}
+      iframe.embed.tableau-embed{height:560px !important;}
       .badge{font-size:12px; padding:10px 14px;}
     }
   </style>
@@ -270,7 +279,7 @@
         <div class="frame">
           <iframe class="embed"
             title="HR Attrition — Executive Dashboard"
-            src="./reports/HR_Attrition_Executive_Dashboard.html"
+            src="./reports/HR_Attrition_Storytelling.html"
             allowfullscreen="true">
           </iframe>
         </div>
@@ -315,14 +324,15 @@
         </div>
       </div>
 
-      <!-- 5) TABLEAU (LAST, FULL WIDTH VIA IFRAME) -->
+      <!-- 5) TABLEAU (LAST) -->
       <div class="card">
         <h3>5) Real Estate Sales (2001–2020)</h3>
         <p class="meta">Tableau Dashboard</p>
         <div class="frame">
-          <iframe class="embed"
+          <iframe
+            class="embed tableau-embed"
             title="Real Estate Sales (2001–2020) - Tableau"
-            src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:language=pt-BR&:toolbar=yes"
+            src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:embed=yes&:toolbar=yes&:language=pt-BR"
             allowfullscreen="true">
           </iframe>
         </div>
