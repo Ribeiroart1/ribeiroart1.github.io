@@ -132,7 +132,6 @@
       font-weight:650;
     }
 
-    /* Standard frame for all embeds */
     .frame{
       border:1px solid var(--cardLine);
       border-radius:12px;
@@ -148,7 +147,6 @@
       background:#000;
     }
 
-    /* Tableau: force full width/height (strongest, most compatible) */
     .tableau-container{
       position:relative;
       width:100% !important;
@@ -165,7 +163,6 @@
       display:block !important;
     }
 
-    /* Tech stack badges */
     .tech-badges{
       display:flex;
       flex-wrap:wrap;
@@ -187,21 +184,16 @@
     .python{background:#3776AB;}
     .pandas{background:#150458;}
     .r{background:#276DC3;}
-
     .postgres{background:#336791;}
     .mysql{background:#003B57;}
     .mongodb{background:#13AA52;}
-
     .powerbi{background:#F2C811; color:#111;}
     .tableau{background:#1F77B4;}
     .databricks{background:#FF3621;}
-
     .powerapps{background:#742774;}
     .powerautomate{background:#0066FF;}
-
     .streamlit{background:#FF4B4B;}
     .plotly{background:#3F4F75;}
-
     .vscode{background:#007ACC;}
     .github{background:#111111;}
     .excel{background:#1D6F42;}
@@ -250,40 +242,46 @@
       <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a>
     </div>
 
-    <!-- TECH STACK -->
     <h2 class="section-title">Tech stack</h2>
 
     <div class="tech-badges">
       <span class="badge python">Python</span>
       <span class="badge pandas">Pandas</span>
       <span class="badge r">R</span>
-
       <span class="badge postgres">Postgres</span>
       <span class="badge mysql">MySQL</span>
       <span class="badge mongodb">MongoDB</span>
-
       <span class="badge databricks">Databricks</span>
       <span class="badge powerbi">Power BI</span>
       <span class="badge tableau">Tableau</span>
-
       <span class="badge powerapps">Power Apps</span>
       <span class="badge powerautomate">Power Automate</span>
-
       <span class="badge streamlit">Streamlit</span>
       <span class="badge plotly">Plotly</span>
-
       <span class="badge vscode">VS Code</span>
       <span class="badge terminal">Windows Terminal</span>
       <span class="badge github">GitHub</span>
-
       <span class="badge excel">Microsoft Excel</span>
       <span class="badge powerpoint">Microsoft PowerPoint</span>
     </div>
 
-    <!-- DASHBOARDS -->
     <h2 class="section-title">Interactive Dashboards</h2>
 
     <div class="grid">
+
+      <!-- NEW FIRST DASHBOARD -->
+      <div class="card">
+        <h3>Consumer Complaints — Executive Dashboard</h3>
+        <p class="meta">Python · Plotly (HTML)</p>
+        <div class="frame">
+          <iframe class="embed"
+            title="Consumer Complaints — Executive Dashboard"
+            src="dashboards/consumer-complaints/"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+
       <!-- 1 -->
       <div class="card">
         <h3>1) Stats About Unemployment (2005–2015)</h3>
@@ -323,7 +321,7 @@
         </div>
       </div>
 
-      <!-- 4 Tableau (last) -->
+      <!-- 4 Tableau -->
       <div class="card">
         <h3>4) Real Estate Sales (2001–2020)</h3>
         <p class="meta">Tableau Dashboard</p>
