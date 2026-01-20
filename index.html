@@ -96,13 +96,6 @@
       letter-spacing:-0.01em;
     }
 
-    .divider{
-      height:1px;
-      width:100%;
-      background:var(--line);
-      margin: 16px 0 8px;
-    }
-
     .grid{
       display:grid;
       grid-template-columns:1fr;
@@ -138,6 +131,7 @@
       border-radius:12px;
       overflow:hidden;
       background:#000;
+      width:100%;
     }
 
     .embed{
@@ -148,7 +142,7 @@
       background:#000;
     }
 
-    /* Fix Tableau width (force full width/height) */
+    /* Tableau: force full width/height */
     .tableau-container{
       position:relative;
       width:100%;
@@ -157,10 +151,11 @@
     }
     .tableau-container iframe{
       position:absolute;
-      top:0; left:0;
+      inset:0;
       width:100% !important;
       height:100% !important;
-      border:0;
+      border:0 !important;
+      display:block;
     }
 
     /* Tech stack badges */
@@ -204,7 +199,6 @@
     .github{background:#111111;}
     .excel{background:#1D6F42;}
     .powerpoint{background:#B7472A;}
-    .terminal{background:#4D4D4D;}
 
     footer{
       margin-top:70px;
@@ -250,7 +244,6 @@
       <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a>
     </div>
 
-    <!-- TECH STACK -->
     <h2 class="section-title">Tech stack</h2>
 
     <div class="tech-badges">
@@ -273,14 +266,12 @@
       <span class="badge plotly">Plotly</span>
 
       <span class="badge vscode">VS Code</span>
-      <span class="badge terminal">Windows Terminal</span>
       <span class="badge github">GitHub</span>
 
       <span class="badge excel">Microsoft Excel</span>
       <span class="badge powerpoint">Microsoft PowerPoint</span>
     </div>
 
-    <!-- DASHBOARDS -->
     <h2 class="section-title">Interactive Dashboards</h2>
 
     <div class="grid">
@@ -292,7 +283,7 @@
         <div class="frame">
           <iframe class="embed"
             title="HR Attrition — Executive Dashboard"
-            src="reports/HR_Attrition_Executive_Dashboard.html"
+            src="/reports/HR_Attrition_Executive_Dashboard.html"
             allowfullscreen="true">
           </iframe>
         </div>
@@ -345,7 +336,7 @@
           <div class="tableau-container">
             <iframe
               title="Real Estate Sales (2001–2020) - Tableau"
-              src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:toolbar=yes"
+              src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:embed=y&:toolbar=yes&:language=pt-BR"
               allowfullscreen="true">
             </iframe>
           </div>
