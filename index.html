@@ -370,11 +370,40 @@
         <h3>4) Real Estate Sales (2001–2020)</h3>
         <p class="meta">Tableau Dashboard</p>
         <div class="frame">
-          <iframe class="embed"
-            title="Real Estate Sales (2001–2020) - Tableau"
-            src="https://public.tableau.com/views/a_17012711958400/Painel1?:showVizHome=no&:language=pt-BR&:toolbar=yes"
-            allowfullscreen="true">
-          </iframe>
+          <!-- Tableau Public responsive embed (forces full width like other dashboards) -->
+          <div class="tableauPlaceholder" id="tableauVizRealEstate" style="position:relative; width:100%; height:720px;">
+            <object class="tableauViz" style="display:none;">
+              <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+              <param name="embed_code_version" value="3" />
+              <param name="site_root" value="" />
+              <param name="name" value="a_17012711958400/Painel1" />
+              <param name="tabs" value="no" />
+              <param name="toolbar" value="yes" />
+              <param name="showVizHome" value="n" />
+              <param name="language" value="pt-BR" />
+            </object>
+          </div>
+
+          <script type="text/javascript">
+            (function () {
+              var divElement = document.getElementById("tableauVizRealEstate");
+              var vizElement = divElement.getElementsByTagName("object")[0];
+
+              // Force same sizing rules as the other embeds
+              vizElement.style.width = "100%";
+              vizElement.style.height = (window.innerWidth <= 640 ? "560px" : "720px");
+
+              var scriptElement = document.createElement("script");
+              scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+              vizElement.parentNode.insertBefore(scriptElement, vizElement);
+
+              // Optional: keep it responsive if user resizes
+              window.addEventListener("resize", function () {
+                vizElement.style.width = "100%";
+                vizElement.style.height = (window.innerWidth <= 640 ? "560px" : "720px");
+              });
+            })();
+          </script>
         </div>
       </div>
 
