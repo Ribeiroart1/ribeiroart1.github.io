@@ -269,6 +269,50 @@
 
     <div class="grid">
 
+      <!-- NEW FIRST DASHBOARD (Global Air Logistics) -->
+      <div class="card">
+        <h3>Global Air Logistics — Real-Time Network Health</h3>
+        <p class="meta">Python · REST APIs · Pandas · Plotly (HTML)</p>
+
+        <p class="lead" style="margin-bottom:14px;">
+          This project demonstrates an end-to-end data engineering workflow applied to global logistics
+          using real-time aviation data as a proxy for international supply chain activity.
+        </p>
+
+        <p class="lead" style="margin-bottom:14px;">
+          Data is ingested directly from a public API and collected in near real time, simulating a streaming
+          scenario commonly found in operational logistics platforms. The pipeline follows a layered
+          architecture (bronze, silver, and gold), focusing on data quality, deduplication, and performance-aware
+          transformations.
+        </p>
+
+        <p class="lead" style="margin-bottom:14px;">
+          At the analytics layer, raw aircraft state vectors are transformed into business-ready metrics such as
+          active aircraft, country-level network activity, operational status (airborne vs. on ground), and
+          traffic trends over time. To ensure smooth web performance, the dataset is selectively aggregated
+          and sampled before visualization.
+        </p>
+
+        <p class="lead" style="margin-bottom:14px;">
+          The final result is an executive-friendly dashboard that provides a real-time view of global air
+          logistics health, combining high-level KPIs with geographic context and interactive filtering.
+          All visualizations are rendered as a standalone HTML application, ready for deployment on GitHub Pages.
+        </p>
+
+        <p class="lead" style="margin-bottom:22px;">
+          <strong>Tools & techniques:</strong> Python, REST APIs, Pandas, data modeling (fact & dimensions),
+          data quality checks, performance-aware aggregations, Plotly, and static web deployment.
+        </p>
+
+        <div class="frame">
+          <iframe class="embed"
+            title="Global Air Logistics — Real-Time Network Health"
+            src="dashboards/global-air-logistics/global_air_logistics_dashboard.html"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+
       <!-- NEW FIRST DASHBOARD -->
       <div class="card">
         <h3>Consumer Complaints — Executive Dashboard</h3>
