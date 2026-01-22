@@ -34,7 +34,23 @@
       padding:18px;
       box-shadow: var(--shadow);
     }
-    .row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;}
+
+    /* Layout: prevent overlap and keep controls responsive */
+    .row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+    }
+    .input-col{flex:1 1 560px; min-width: 260px;}
+    .actions{
+      flex:0 0 auto;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-width: 160px;
+    }
+
     textarea{
       width:100%;
       min-height:110px;
@@ -47,7 +63,10 @@
       outline:none;
       font-size:14px;
       font-weight:550;
+      box-sizing:border-box;
+      display:block;
     }
+
     .btn{
       cursor:pointer;
       border:1px solid var(--cardLine);
@@ -61,8 +80,12 @@
       text-transform:uppercase;
       box-shadow: var(--shadow);
       height:44px;
+      width:100%;
+      box-sizing:border-box;
+      white-space:nowrap;
     }
     .btn:hover{ border-color: rgba(100,181,255,0.55); }
+
     .hint{color:var(--muted);font-size:12px;margin-top:10px;}
     .kpis{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
     .kpi{
@@ -103,6 +126,21 @@
       font-size:0.95rem;
       text-align:center;
     }
+
+    /* Mobile: stack buttons below textarea */
+    @media (max-width:640px){
+      .actions{
+        width:100%;
+        min-width: 0;
+        flex-direction:row;
+        flex-wrap:wrap;
+        gap:10px;
+      }
+      .btn{
+        width:auto;
+        flex:1 1 120px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -114,7 +152,7 @@
 
     <div class="card">
       <div class="row">
-        <div style="flex:1 1 560px;">
+        <div class="input-col">
           <textarea id="q" placeholder="Try: 'Unauthorized fees on credit cards' or 'Debt collection harassment'"></textarea>
           <div class="hint" id="status">Loading vectors…</div>
           <div class="kpis">
@@ -123,9 +161,10 @@
             <div class="kpi" id="kMode">Mode: Static RAG</div>
           </div>
         </div>
-        <div style="flex:0 0 auto;">
-          <button class="btn" id="btnAsk">Ask</button><br/><br/>
-          <button class="btn" id="btnExample">Example</button><br/><br/>
+
+        <div class="actions">
+          <button class="btn" id="btnAsk">Ask</button>
+          <button class="btn" id="btnExample">Example</button>
           <button class="btn" id="btnClear">Clear</button>
         </div>
       </div>
