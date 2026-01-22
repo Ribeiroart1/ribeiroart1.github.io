@@ -35,20 +35,17 @@
       box-shadow: var(--shadow);
     }
 
-    /* Layout: prevent overlap and keep controls responsive */
-    .row{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      align-items:flex-start;
-    }
-    .input-col{flex:1 1 560px; min-width: 260px;}
-    .actions{
-      flex:0 0 auto;
+    /* NEW: stable layout (textarea top, buttons below) */
+    .controls{
       display:flex;
       flex-direction:column;
       gap:12px;
-      min-width: 160px;
+    }
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
     }
 
     textarea{
@@ -80,19 +77,24 @@
       text-transform:uppercase;
       box-shadow: var(--shadow);
       height:44px;
-      width:100%;
       box-sizing:border-box;
       white-space:nowrap;
     }
     .btn:hover{ border-color: rgba(100,181,255,0.55); }
 
-    .hint{color:var(--muted);font-size:12px;margin-top:10px;}
-    .kpis{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+    /* Optional: make Ask a bit more prominent */
+    .btn.primary{
+      border-color: rgba(100,181,255,0.45);
+    }
+
+    .hint{color:var(--muted);font-size:12px;margin-top:2px;}
+    .kpis{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;}
     .kpi{
       padding:10px 12px;border-radius:12px;border:1px solid var(--cardLine);
       background:rgba(255,255,255,0.06);font-size:12px;color:rgba(255,255,255,0.88);
       font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
     }
+
     .answer{
       margin-top:16px;
       padding:14px;
@@ -102,6 +104,7 @@
     }
     .answer h3{margin:0 0 8px;font-size:14px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);}
     .answer p{margin:0;color:rgba(255,255,255,0.9);font-size:14px;}
+
     .results{margin-top:14px;display:grid;grid-template-columns:1fr;gap:12px;}
     .res{
       border:1px solid var(--cardLine);
@@ -127,19 +130,10 @@
       text-align:center;
     }
 
-    /* Mobile: stack buttons below textarea */
+    /* Mobile: buttons become full-width if desired */
     @media (max-width:640px){
-      .actions{
-        width:100%;
-        min-width: 0;
-        flex-direction:row;
-        flex-wrap:wrap;
-        gap:10px;
-      }
-      .btn{
-        width:auto;
-        flex:1 1 120px;
-      }
+      .actions{gap:10px;}
+      .btn{flex:1 1 120px;}
     }
   </style>
 </head>
@@ -151,21 +145,21 @@
     </div>
 
     <div class="card">
-      <div class="row">
-        <div class="input-col">
-          <textarea id="q" placeholder="Try: 'Unauthorized fees on credit cards' or 'Debt collection harassment'"></textarea>
-          <div class="hint" id="status">Loading vectors…</div>
-          <div class="kpis">
-            <div class="kpi" id="kDocs">Docs: —</div>
-            <div class="kpi" id="kModel">Embeddings: MiniLM</div>
-            <div class="kpi" id="kMode">Mode: Static RAG</div>
-          </div>
-        </div>
+      <div class="controls">
+        <textarea id="q" placeholder="Try: 'Unauthorized fees on credit cards' or 'Debt collection harassment'"></textarea>
 
         <div class="actions">
-          <button class="btn" id="btnAsk">Ask</button>
+          <button class="btn primary" id="btnAsk">Ask</button>
           <button class="btn" id="btnExample">Example</button>
           <button class="btn" id="btnClear">Clear</button>
+        </div>
+
+        <div class="hint" id="status">Loading vectors…</div>
+
+        <div class="kpis">
+          <div class="kpi" id="kDocs">Docs: —</div>
+          <div class="kpi" id="kModel">Embeddings: MiniLM</div>
+          <div class="kpi" id="kMode">Mode: Static RAG</div>
         </div>
       </div>
 
