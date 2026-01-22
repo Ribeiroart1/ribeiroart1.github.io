@@ -269,6 +269,39 @@
 
     <div class="grid">
 
+      <!-- NEW FIRST PROJECT (LLM Static RAG) -->
+      <div class="card">
+        <h3>LLM Complaint Intelligence — Semantic Q&A (Static RAG)</h3>
+        <p class="meta">Python · NLP · Embeddings · Retrieval (RAG) · GitHub Pages (Static)</p>
+
+        <p class="lead" style="margin-bottom:14px;">
+          This project turns unstructured consumer complaints into a searchable, evidence-based Q&amp;A experience.
+          Instead of deploying an always-on chatbot server, the semantic layer is precomputed offline: complaints are
+          cleaned and normalized, transformed into vector embeddings, and packaged together with lightweight metadata.
+        </p>
+
+        <p class="lead" style="margin-bottom:14px;">
+          At runtime, the web app runs entirely in the browser. User questions are converted into a compact vector representation
+          and matched against the precomputed embedding index to retrieve the most relevant complaint narratives. The app then
+          generates an “LLM-style” answer grounded in the retrieved evidence (top matching complaints), highlighting recurring products,
+          issues, and companies to keep the output practical and auditable.
+        </p>
+
+        <p class="lead" style="margin-bottom:14px;">
+          From a data engineering perspective, this mirrors a production-friendly RAG pipeline: a repeatable offline build step (data prep,
+          vectorization, and export) followed by a zero-infrastructure serving layer. The result is fast, cost-free, and easy to deploy—
+          ideal for portfolio demos and internal knowledge tools.
+        </p>
+
+        <p class="lead" style="margin-bottom:18px;">
+          <strong>Key techniques:</strong> text normalization, embedding generation, similarity search, evidence-first responses, and static deployment.
+        </p>
+
+        <a href="dashboards/llm-complaint-intelligence/" target="_blank" rel="noopener">
+          Open interactive LLM demo →
+        </a>
+      </div>
+
       <!-- NEW FIRST DASHBOARD (Global Air Logistics) -->
       <div class="card">
         <h3>Global Air Logistics — Real-Time Network Health</h3>
