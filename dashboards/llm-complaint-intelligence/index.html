@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>LLM Complaint Intelligence — Semantic Q&A (Static RAG)</title>
+
+  <style>
+    :root{
+      --bg:#0b0f16;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,0.72);
+      --line:rgba(255,255,255,0.16);
+      --cardLine:rgba(255,255,255,0.10);
+      --shadow: 0 10px 30px rgba(0,0,0,0.25);
+      --link:#64b5ff;
+    }
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(100,181,255,0.12), transparent 50%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(255,54,33,0.10), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    .container{max-width:1100px;margin:0 auto;padding:44px 18px 52px;}
+    h1{font-size:clamp(28px,3.2vw,42px);margin:0 0 6px;letter-spacing:-0.02em;font-weight:900;}
+    .subtitle{color:var(--muted);font-size:0.98rem;margin:0 0 18px;font-weight:650;}
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid var(--cardLine);
+      border-radius:14px;
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;}
+    textarea{
+      width:100%;
+      min-height:110px;
+      resize:vertical;
+      background:rgba(255,255,255,0.06);
+      border:1px solid var(--cardLine);
+      color:var(--text);
+      border-radius:12px;
+      padding:12px;
+      outline:none;
+      font-size:14px;
+      font-weight:550;
+    }
+    .btn{
+      cursor:pointer;
+      border:1px solid var(--cardLine);
+      background:rgba(255,255,255,0.06);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius:14px;
+      font-size:12px;
+      font-weight:850;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      box-shadow: var(--shadow);
+      height:44px;
+    }
+    .btn:hover{ border-color: rgba(100,181,255,0.55); }
+    .hint{color:var(--muted);font-size:12px;margin-top:10px;}
+    .kpis{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+    .kpi{
+      padding:10px 12px;border-radius:12px;border:1px solid var(--cardLine);
+      background:rgba(255,255,255,0.06);font-size:12px;color:rgba(255,255,255,0.88);
+      font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
+    }
+    .answer{
+      margin-top:16px;
+      padding:14px;
+      border:1px solid var(--cardLine);
+      border-radius:14px;
+      background:rgba(0,0,0,0.22);
+    }
+    .answer h3{margin:0 0 8px;font-size:14px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);}
+    .answer p{margin:0;color:rgba(255,255,255,0.9);font-size:14px;}
+    .results{margin-top:14px;display:grid;grid-template-columns:1fr;gap:12px;}
+    .res{
+      border:1px solid var(--cardLine);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(255,255,255,0.04);
+    }
+    .res .meta{color:var(--muted);font-size:12px;font-weight:700;margin-bottom:6px;}
+    .tag{
+      display:inline-block;margin-right:6px;margin-top:6px;
+      padding:5px 8px;border-radius:999px;border:1px solid var(--cardLine);
+      background:rgba(255,255,255,0.06);
+      font-size:11px;color:rgba(255,255,255,0.84);font-weight:800;
+    }
+    a{color:var(--link);text-decoration:none;font-weight:800;}
+    a:hover{text-decoration:underline;}
+    footer{
+      margin-top:34px;
+      padding-top:18px;
+      border-top:1px solid var(--line);
+      color:rgba(255,255,255,0.72);
+      font-size:0.95rem;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LLM Complaint Intelligence — Semantic Q&amp;A (Static RAG)</h1>
+    <div class="subtitle">
+      Ask a question about consumer complaints. This demo runs entirely in the browser using precomputed embeddings (no backend).
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <div style="flex:1 1 560px;">
+          <textarea id="q" placeholder="Try: 'Unauthorized fees on credit cards' or 'Debt collection harassment'"></textarea>
+          <div class="hint" id="status">Loading vectors…</div>
+          <div class="kpis">
+            <div class="kpi" id="kDocs">Docs: —</div>
+            <div class="kpi" id="kModel">Embeddings: MiniLM</div>
+            <div class="kpi" id="kMode">Mode: Static RAG</div>
+          </div>
+        </div>
+        <div style="flex:0 0 auto;">
+          <button class="btn" id="btnAsk">Ask</button><br/><br/>
+          <button class="btn" id="btnExample">Example</button><br/><br/>
+          <button class="btn" id="btnClear">Clear</button>
+        </div>
+      </div>
+
+      <div class="answer" id="answerBox" style="display:none;">
+        <h3>Answer (evidence-based)</h3>
+        <p id="answerText"></p>
+      </div>
+
+      <div class="results" id="results"></div>
+    </div>
+
+    <footer>Developed by Arthur Ribeiro</footer>
+  </div>
+
+<script>
+  // NOTE: This is "static RAG": we retrieve top similar complaints and generate an answer template from metadata.
+  // No LLM is called from the browser.
+
+  let DOCS = [];
+  let EMB = [];
+  let READY = false;
+
+  function dot(a,b){
+    let s = 0;
+    for (let i=0;i<a.length;i++) s += a[i]*b[i];
+    return s;
+  }
+  function norm(a){
+    let s=0; for(let i=0;i<a.length;i++) s += a[i]*a[i];
+    return Math.sqrt(s);
+  }
+  function cosine(a,b){
+    return dot(a,b) / (norm(a)*norm(b) + 1e-12);
+  }
+
+  // Tiny local "embedding" for the query:
+  // We avoid heavy models in-browser. Instead, we use a simple hashing vectorizer.
+  // It won't be perfect, but works surprisingly well for demos.
+  function hashEmbed(text, dim=384){
+    const v = new Float32Array(dim);
+    const toks = text.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(Boolean);
+    for (const t of toks){
+      let h = 2166136261;
+      for (let i=0;i<t.length;i++){
+        h ^= t.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      const idx = Math.abs(h) % dim;
+      v[idx] += 1.0;
+    }
+    // normalize
+    let s=0; for(let i=0;i<dim;i++) s += v[i]*v[i];
+    const n = Math.sqrt(s) || 1;
+    for(let i=0;i<dim;i++) v[i] /= n;
+    return v;
+  }
+
+  function fmtMeta(d){
+    const parts = [];
+    if (d.product) parts.push(d.product);
+    if (d.issue) parts.push(d.issue);
+    if (d.company) parts.push(d.company);
+    if (d.state) parts.push(d.state);
+    return parts.join(" • ");
+  }
+
+  function buildAnswer(topDocs){
+    // "LLM-like" answer template using evidence (top docs) — fully static.
+    const products = {};
+    const issues = {};
+    const companies = {};
+    topDocs.forEach(d => {
+      products[d.product] = (products[d.product]||0) + 1;
+      issues[d.issue] = (issues[d.issue]||0) + 1;
+      companies[d.company] = (companies[d.company]||0) + 1;
+    });
+
+    function topK(obj, k=3){
+      return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,k).map(x=>x[0]).filter(Boolean);
+    }
+
+    const tp = topK(products, 3);
+    const ti = topK(issues, 3);
+    const tc = topK(companies, 3);
+
+    return `Based on the most similar complaints in the dataset, this topic is commonly associated with `
+      + `${tp.length?`products like ${tp.join(", ")}`:"multiple products"}`
+      + `${ti.length?` and issues such as ${ti.join(", ")}`:" and a variety of issues"}`
+      + `${tc.length?`. The most frequently mentioned companies in the retrieved evidence include ${tc.join(", ")}.`:"."}`
+      + ` Review the evidence cards below for concrete examples and recurring patterns.`;
+  }
+
+  function renderResults(scored){
+    const res = document.getElementById("results");
+    res.innerHTML = "";
+
+    const top = scored.slice(0,5).map(x => x.doc);
+
+    // answer box
+    document.getElementById("answerText").textContent = buildAnswer(top);
+    document.getElementById("answerBox").style.display = "block";
+
+    scored.slice(0,8).forEach((x, idx) => {
+      const d = x.doc;
+      const div = document.createElement("div");
+      div.className = "res";
+      div.innerHTML = `
+        <div class="meta"><b>#${idx+1}</b> • ${fmtMeta(d)} • Similarity: ${(x.score*100).toFixed(1)}%</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.90);">${d.short_summary || ""}</div>
+        <div>${(d.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+      `;
+      res.appendChild(div);
+    });
+  }
+
+  function ask(){
+    if(!READY) return;
+    const q = document.getElementById("q").value.trim();
+    if(!q) return;
+
+    const qv = hashEmbed(q, 384);
+
+    // similarity search vs precomputed embeddings
+    const scored = [];
+    for(let i=0;i<EMB.length;i++){
+      const ev = EMB[i];
+      // ev is array length 384
+      let s = 0;
+      for(let j=0;j<ev.length;j++) s += qv[j] * ev[j];
+      scored.push({idx:i, score:s, doc:DOCS[i]});
+    }
+    scored.sort((a,b)=>b.score-a.score);
+
+    renderResults(scored);
+  }
+
+  function example(){
+    document.getElementById("q").value = "Unauthorized fees and billing disputes on credit cards";
+  }
+
+  function clearAll(){
+    document.getElementById("q").value = "";
+    document.getElementById("answerBox").style.display = "none";
+    document.getElementById("results").innerHTML = "";
+  }
+
+  async function loadAll(){
+    try{
+      const [docs, emb] = await Promise.all([
+        fetch("docs.json").then(r=>r.json()),
+        fetch("embeddings.json").then(r=>r.json()),
+      ]);
+      DOCS = docs;
+      EMB = emb;
+
+      READY = true;
+      document.getElementById("kDocs").textContent = `Docs: ${DOCS.length.toLocaleString("en-US")}`;
+      document.getElementById("status").textContent = "Ready. Ask a question to retrieve evidence.";
+    }catch(e){
+      document.getElementById("status").textContent = "Failed to load docs/embeddings. Check that docs.json and embeddings.json are in the same folder as index.html.";
+      console.error(e);
+    }
+  }
+
+  document.getElementById("btnAsk").addEventListener("click", ask);
+  document.getElementById("btnExample").addEventListener("click", example);
+  document.getElementById("btnClear").addEventListener("click", clearAll);
+
+  loadAll();
+</script>
+</body>
+</html>
