@@ -423,7 +423,7 @@
       <span class="badge powerpoint">Microsoft PowerPoint</span>
     </div>
 
-    <h2 class="section-title">Interactive Dashboards</h2>
+    <h2 class="section-title">Projects</h2>
 
     <div class="grid">
 
@@ -760,7 +760,7 @@
 
           var forecastUrl = "https://api.open-meteo.com/v1/forecast" +
             "?latitude=" + lat + "&longitude=" + lon +
-            "&daily=temperature_2m_max,temperature_2m_min,rain_sum,precipitation_hours,sunshine_duration,precipitation_probability_max" +
+            "&daily=temperature_2m_max,temperature_2m_min,rain_sum,precipitation_hours,sunshine_duration,precipitation_probability_max,relative_humidity_2m_mean" +
             "&past_days=3&forecast_days=2&timezone=auto";
 
           var wRes = await fetch(forecastUrl);
@@ -792,6 +792,7 @@
 
           var tMax = daily.temperature_2m_max[idxTomorrow];
           var tMin = daily.temperature_2m_min[idxTomorrow];
+          var humidityTomorrow = daily.relative_humidity_2m_mean ? daily.relative_humidity_2m_mean[idxTomorrow] : null;
 
           gaugeEl.style.setProperty("--pct", modelPct);
           gaugeEl.style.setProperty("--gaugeColor", gaugeColor(modelPct));
@@ -809,8 +810,9 @@
           var chips = [
             "Last 3 days rain: <b>" + avgRain.toFixed(1) + " mm/day avg</b>",
             "Rain hours/day: <b>" + avgHours.toFixed(1) + " h</b>",
-            "Tomorrow: <b>" + Math.round(tMin) + "\u00B0 / " + Math.round(tMax) + "\u00B0C</b>"
-          ];
+            "Tomorrow: <b>" + Math.round(tMin) + "\u00B0 / " + Math.round(tMax) + "\u00B0C</b>",
+            humidityTomorrow !== null ? "Humidity tomorrow: <b>" + Math.round(humidityTomorrow) + "%</b>" : null
+          ].filter(Boolean);
           chips.forEach(function (text) {
             var span = document.createElement("span");
             span.className = "weather-chip";
