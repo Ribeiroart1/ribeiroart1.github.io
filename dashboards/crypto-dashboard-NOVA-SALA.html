@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Top 500 Crypto Markets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  :root{
+    --bg:#0b0f16;
+    --text:#ffffff;
+    --muted:rgba(255,255,255,0.72);
+    --line:rgba(255,255,255,0.16);
+    --cardLine:rgba(255,255,255,0.10);
+    --link:#64b5ff;
+    --up:#3ddc84;
+    --down:#ff5c5c;
+    --sell:#3ddc84;
+    --buy:#ff5c5c;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+  .wrap{ padding:22px; }
+
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .title-block h1{ margin:0 0 4px; font-size:1.3rem; font-weight:900; letter-spacing:-0.01em; }
+  .title-block .sub{ color:var(--muted); font-size:0.82rem; }
+
+  .search-input{
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--cardLine);
+    border-radius:10px;
+    padding:9px 12px;
+    color:var(--text);
+    font-size:0.88rem;
+    min-width:220px;
+    font-family:inherit;
+  }
+  .search-input::placeholder{ color:rgba(255,255,255,0.4); }
+  .search-input:focus{ outline:none; border-color:var(--link); }
+
+  .status-line{
+    color:var(--muted);
+    font-size:0.8rem;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    min-height:18px;
+  }
+  .spinner{
+    width:13px; height:13px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,0.2);
+    border-top-color:var(--link);
+    animation:spin 0.8s linear infinite;
+    flex:0 0 auto;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .table-scroll{
+    overflow-x:auto;
+    border:1px solid var(--cardLine);
+    border-radius:12px;
+  }
+  table{ width:100%; border-collapse:collapse; font-size:0.84rem; min-width:920px; }
+  thead th{
+    text-align:right;
+    color:var(--muted);
+    font-weight:700;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    padding:11px 12px;
+    border-bottom:1px solid var(--line);
+    background:#0d1420;
+    position:sticky;
+    top:0;
+  }
+  thead th.left{ text-align:left; }
+  tbody td{
+    padding:9px 12px;
+    border-bottom:1px solid var(--cardLine);
+    text-align:right;
+    white-space:nowrap;
+  }
+  tbody td.left{ text-align:left; }
+  tbody tr:hover{ background:rgba(255,255,255,0.03); }
+  tbody tr:last-child td{ border-bottom:0; }
+
+  .asset-cell{ display:flex; align-items:center; gap:9px; }
+  .asset-icon{ width:22px; height:22px; border-radius:50%; flex:0 0 auto; }
+  .asset-name{ font-weight:700; }
+  .asset-symbol{ color:var(--muted); font-size:0.74rem; margin-left:2px; }
+  .rank{ color:var(--muted); }
+
+  .up{ color:var(--up); }
+  .down{ color:var(--down); }
+
+  .sector-tag{
+    display:inline-block;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--cardLine);
+    border-radius:999px;
+    padding:3px 9px;
+    font-size:0.7rem;
+    color:rgba(255,255,255,0.82);
+    white-space:nowrap;
+  }
+  .sector-empty{ color:rgba(255,255,255,0.35); font-size:0.78rem; }
+
+  .depth-cell{ width:130px; }
+  .depth-svg{ display:block; }
+
+  .empty-state{ text-align:center; padding:60px 20px; color:var(--muted); }
+
+  .legend{
+    display:flex;
+    gap:16px;
+    align-items:center;
+    color:var(--muted);
+    font-size:0.75rem;
+    margin-top:10px;
+  }
+  .legend-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; }
+
+  footer{
+    margin-top:20px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+    color:rgba(255,255,255,0.55);
+    font-size:0.76rem;
+    line-height:1.5;
+  }
+
+  @media (max-width:640px){
+    .wrap{ padding:14px; }
+    .toolbar{ align-items:stretch; }
+    .search-input{ min-width:0; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="title-block">
+        <h1>Top 500 Crypto Markets</h1>
+        <div class="sub" id="statusSub">Live prices via CoinGecko</div>
+      </div>
+      <input type="text" id="searchInput" class="search-input" placeholder="Filter by name or symbol..." autocomplete="off" />
+    </div>
+
+    <div class="status-line" id="statusLine">
+      <span class="spinner"></span><span id="statusText">Loading top 500 assets...</span>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th class="left">#</th>
+            <th class="left">Asset</th>
+            <th>Price</th>
+            <th>24h</th>
+            <th>7d</th>
+            <th>30d</th>
+            <th>Market Cap</th>
+            <th>Order Book Depth</th>
+            <th class="left">Sub-Sector</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="legend">
+      <span><span class="legend-dot" style="background:var(--buy);"></span>Buy orders (bids)</span>
+      <span><span class="legend-dot" style="background:var(--sell);"></span>Sell orders (asks)</span>
+    </div>
+
+    <div id="emptyState" class="empty-state" style="display:none;">No assets match your search.</div>
+
+    <footer>
+      Prices, market cap and % change come from CoinGecko's free public API. Order book depth
+      loads on demand from Binance's public REST API for pairs that trade there as SYMBOL/USDT —
+      it reflects resting buy/sell orders right now, not a historical trend, since exchanges don't
+      keep free public history of order book depth. Sub-sector labels are a manually curated
+      reference set covering well-known assets; unlisted assets show as "—" rather than a guess.
+    </footer>
+  </div>
+
+<script>
+(function(){
+  var SECTOR_MAP = {
+    BTC:"Layer-1", ETH:"Layer-1", BNB:"Layer-1", SOL:"Layer-1", ADA:"Layer-1", AVAX:"Layer-1",
+    DOT:"Layer-1", TRX:"Layer-1", TON:"Layer-1", NEAR:"Layer-1", ATOM:"Layer-1", ETC:"Layer-1",
+    APT:"Layer-1", SUI:"Layer-1", SEI:"Layer-1", ALGO:"Layer-1", HBAR:"Layer-1", ICP:"Layer-1",
+    XLM:"Layer-1", XTZ:"Layer-1", EOS:"Layer-1", KAS:"Layer-1", XRP:"Centralized Payments",
+    USDT:"Fiat-backed Stablecoin", USDC:"Fiat-backed Stablecoin", FDUSD:"Fiat-backed Stablecoin",
+    TUSD:"Fiat-backed Stablecoin", DAI:"Crypto-backed Stablecoin", USDE:"Synthetic Stablecoin",
+    PYUSD:"Fiat-backed Stablecoin",
+    MATIC:"Layer-2", POL:"Layer-2", ARB:"Layer-2", OP:"Layer-2", STRK:"Layer-2", IMX:"Layer-2",
+    METIS:"Layer-2", MANTA:"Layer-2",
+    UNI:"Decentralized Exchange", CRV:"Decentralized Exchange", SUSHI:"Decentralized Exchange",
+    RUNE:"Decentralized Exchange", JUP:"Decentralized Exchange", CAKE:"Decentralized Exchange",
+    AAVE:"Lending", MKR:"Lending", COMP:"Lending", MORPHO:"Lending",
+    LDO:"Liquid Staking", RPL:"Liquid Staking", ETHFI:"Liquid Staking",
+    SNX:"Derivatives", DYDX:"Derivatives", GMX:"Derivatives", HYPE:"Derivatives",
+    LINK:"Oracle", PYTH:"Oracle", BAND:"Oracle",
+    DOGE:"Meme", SHIB:"Meme", PEPE:"Meme", WIF:"Meme", FLOKI:"Meme", BONK:"Meme", TRUMP:"Meme",
+    XMR:"Privacy", ZEC:"Privacy", ZEN:"Privacy",
+    FIL:"Storage", AR:"Storage",
+    RNDR:"AI / Compute", RENDER:"AI / Compute", TAO:"AI / Compute", FET:"AI / Compute",
+    AGIX:"AI / Compute", WLD:"AI / Compute", AKT:"AI / Compute",
+    SAND:"Gaming", MANA:"Gaming", AXS:"Gaming", GALA:"Gaming", APE:"Gaming / NFT", FLOW:"Gaming / NFT",
+    ONDO:"RWA", PENDLE:"DeFi Yield",
+    LEO:"Exchange Token", OKB:"Exchange Token", CRO:"Exchange Token", KCS:"Exchange Token",
+    ENA:"Synthetic Stablecoin"
+  };
+
+  var els = {
+    body: document.getElementById("tableBody"),
+    status: document.getElementById("statusLine"),
+    statusText: document.getElementById("statusText"),
+    statusSub: document.getElementById("statusSub"),
+    search: document.getElementById("searchInput"),
+    empty: document.getElementById("emptyState")
+  };
+
+  var allAssets = [];
+  var observer;
+
+  function fmtUsd(n){
+    if (n === null || n === undefined) return "—";
+    if (n >= 1) return "$" + n.toLocaleString(undefined,{ maximumFractionDigits: n >= 1000 ? 0 : 2 });
+    return "$" + n.toPrecision(3);
+  }
+  function fmtCompact(n){
+    if (n === null || n === undefined) return "—";
+    return "$" + new Intl.NumberFormat("en", { notation:"compact", maximumFractionDigits:2 }).format(n);
+  }
+  function fmtPct(n){
+    if (n === null || n === undefined) return "—";
+    var sign = n >= 0 ? "+" : "";
+    return sign + n.toFixed(2) + "%";
+  }
+
+  function renderRows(list){
+    els.body.innerHTML = "";
+    if (!list.length){
+      els.empty.style.display = "block";
+      return;
+    }
+    els.empty.style.display = "none";
+    var frag = document.createDocumentFragment();
+
+    list.forEach(function(a){
+      var tr = document.createElement("tr");
+
+      var tdRank = document.createElement("td");
+      tdRank.className = "left";
+      tdRank.innerHTML = '<span class="rank">' + a.market_cap_rank + '</span>';
+      tr.appendChild(tdRank);
+
+      var tdAsset = document.createElement("td");
+      tdAsset.className = "left";
+      tdAsset.innerHTML =
+        '<div class="asset-cell">' +
+          '<img class="asset-icon" src="' + a.image + '" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'" />' +
+          '<span class="asset-name">' + a.name + '</span>' +
+          '<span class="asset-symbol">' + a.symbol.toUpperCase() + '</span>' +
+        '</div>';
+      tr.appendChild(tdAsset);
+
+      var tdPrice = document.createElement("td");
+      tdPrice.textContent = fmtUsd(a.current_price);
+      tr.appendChild(tdPrice);
+
+      [
+        a.price_change_percentage_24h_in_currency,
+        a.price_change_percentage_7d_in_currency,
+        a.price_change_percentage_30d_in_currency
+      ].forEach(function(v){
+        var td = document.createElement("td");
+        td.textContent = fmtPct(v);
+        if (v !== null && v !== undefined) td.className = v >= 0 ? "up" : "down";
+        tr.appendChild(td);
+      });
+
+      var tdCap = document.createElement("td");
+      tdCap.textContent = fmtCompact(a.market_cap);
+      tr.appendChild(tdCap);
+
+      var tdDepth = document.createElement("td");
+      tdDepth.className = "depth-cell";
+      tdDepth.id = "depth-" + a.symbol;
+      tdDepth.innerHTML = '<svg class="depth-svg" width="120" height="34" viewBox="0 0 120 34"></svg>';
+      tr.appendChild(tdDepth);
+
+      var tdSector = document.createElement("td");
+      tdSector.className = "left";
+      var sector = SECTOR_MAP[a.symbol.toUpperCase()];
+      tdSector.innerHTML = sector
+        ? '<span class="sector-tag">' + sector + '</span>'
+        : '<span class="sector-empty">—</span>';
+      tr.appendChild(tdSector);
+
+      frag.appendChild(tr);
+    });
+
+    els.body.appendChild(frag);
+    observeDepthCells();
+  }
+
+  function observeDepthCells(){
+    if (observer) observer.disconnect();
+    observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          var symbol = entry.target.id.replace("depth-", "");
+          loadDepth(symbol);
+        }
+      });
+    }, { root: null, rootMargin: "150px" });
+    document.querySelectorAll('[id^="depth-"]').forEach(function(el){ observer.observe(el); });
+  }
+
+  async function loadDepth(symbol){
+    var svg = document.querySelector("#depth-" + symbol + " svg");
+    if (!svg) return;
+    try {
+      var pair = symbol.toUpperCase() + "USDT";
+      var res = await fetch("https://api.binance.com/api/v3/depth?symbol=" + pair + "&limit=50");
+      if (!res.ok){ svg.innerHTML = ""; return; }
+      var data = await res.json();
+      drawDepthChart(svg, data.bids || [], data.asks || []);
+    } catch (e) {
+      svg.innerHTML = "";
+    }
+  }
+
+  function drawDepthChart(svg, bidsRaw, asksRaw){
+    var w = 120, h = 34, mid = w / 2;
+
+    var bids = bidsRaw.map(function(l){ return [parseFloat(l[0]), parseFloat(l[1])]; })
+      .sort(function(a, b){ return b[0] - a[0]; });
+    var asks = asksRaw.map(function(l){ return [parseFloat(l[0]), parseFloat(l[1])]; })
+      .sort(function(a, b){ return a[0] - b[0]; });
+
+    var bidCum = [], askCum = [], running = 0;
+    bids.forEach(function(l){ running += l[1]; bidCum.push(running); });
+    running = 0;
+    asks.forEach(function(l){ running += l[1]; askCum.push(running); });
+
+    var maxCum = Math.max(bidCum[bidCum.length - 1] || 0, askCum[askCum.length - 1] || 0) || 1;
+
+    function pathFor(cum, side){
+      var n = cum.length;
+      if (!n) return "";
+      var pts = [side === "bid" ? mid + ",34" : mid + ",34"];
+      for (var i = 0; i < n; i++){
+        var x = side === "bid" ? mid - (i / (n - 1 || 1)) * mid : mid + (i / (n - 1 || 1)) * mid;
+        var y = h - (cum[i] / maxCum) * (h - 4) - 2;
+        pts.push(x.toFixed(1) + "," + y.toFixed(1));
+      }
+      return pts.join(" ");
+    }
+
+    var bidPts = pathFor(bidCum, "bid");
+    var askPts = pathFor(askCum, "ask");
+
+    svg.innerHTML =
+      (bidPts ? '<polyline points="' + bidPts + '" fill="rgba(255,92,92,0.12)" stroke="#ff5c5c" stroke-width="1.4" stroke-linejoin="round" />' : "") +
+      (askPts ? '<polyline points="' + askPts + '" fill="rgba(61,220,132,0.12)" stroke="#3ddc84" stroke-width="1.4" stroke-linejoin="round" />' : "") +
+      '<line x1="' + mid + '" y1="0" x2="' + mid + '" y2="' + h + '" stroke="rgba(255,255,255,0.14)" stroke-width="1" />';
+  }
+
+  function applyFilter(){
+    var q = els.search.value.trim().toLowerCase();
+    if (!q){ renderRows(allAssets); return; }
+    var filtered = allAssets.filter(function(a){
+      return a.name.toLowerCase().indexOf(q) !== -1 || a.symbol.toLowerCase().indexOf(q) !== -1;
+    });
+    renderRows(filtered);
+  }
+
+  async function fetchPage(page){
+    var url = "https://api.coingecko.com/api/v3/coins/markets" +
+      "?vs_currency=usd&order=market_cap_desc&per_page=250&page=" + page +
+      "&price_change_percentage=24h,7d,30d&sparkline=false";
+    var res = await fetch(url);
+    if (!res.ok) throw new Error("CoinGecko request failed (" + res.status + ")");
+    return res.json();
+  }
+
+  async function loadMarkets(){
+    els.status.style.display = "flex";
+    els.statusText.textContent = allAssets.length ? "Refreshing prices..." : "Loading top 500 assets...";
+    try {
+      var pages = await Promise.all([fetchPage(1), fetchPage(2)]);
+      allAssets = pages[0].concat(pages[1]);
+      els.status.style.display = "none";
+      els.statusSub.textContent = "Live prices via CoinGecko · updated " + new Date().toLocaleTimeString();
+      applyFilter();
+    } catch (e) {
+      els.statusText.textContent = "Couldn't load market data right now (rate limited or offline). Retrying in a minute...";
+    }
+  }
+
+  els.search.addEventListener("input", applyFilter);
+  loadMarkets();
+  setInterval(loadMarkets, 60000);
+})();
+</script>
+</body>
+</html>
