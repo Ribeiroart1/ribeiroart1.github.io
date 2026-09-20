@@ -212,6 +212,163 @@
       .embed, .tableau-container{height:560px;}
       .badge{font-size:12px; padding:10px 14px;}
     }
+
+    /* Live Rain Forecast widget */
+    .weather-card{
+      background: linear-gradient(180deg, rgba(100,181,255,0.09), rgba(255,255,255,0.03));
+    }
+
+    .weather-form{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:18px 0 4px;
+    }
+
+    .weather-input{
+      flex:1 1 260px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid var(--cardLine);
+      border-radius:10px;
+      padding:12px 14px;
+      color:var(--text);
+      font-size:1rem;
+      font-family:inherit;
+    }
+    .weather-input::placeholder{ color:rgba(255,255,255,0.4); }
+    .weather-input:focus{ outline:none; border-color:var(--link); }
+
+    .weather-submit{
+      background:var(--link);
+      color:#04101c;
+      border:0;
+      border-radius:10px;
+      padding:12px 22px;
+      font-weight:800;
+      font-size:0.98rem;
+      cursor:pointer;
+      transition:transform 0.15s ease, background 0.15s ease;
+    }
+    .weather-submit:hover{ background:#8cc7ff; }
+    .weather-submit:active{ transform:scale(0.97); }
+    .weather-submit:disabled{ opacity:0.55; cursor:default; transform:none; }
+    .weather-submit:focus-visible{ outline:2px solid var(--link); outline-offset:2px; }
+
+    .weather-hint{
+      color:var(--muted);
+      font-size:0.86rem;
+      margin:6px 0 4px;
+    }
+
+    .weather-status{
+      margin:18px 0;
+      color:var(--muted);
+      font-size:0.95rem;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .weather-spinner{
+      width:16px; height:16px;
+      border-radius:50%;
+      border:2px solid rgba(255,255,255,0.2);
+      border-top-color:var(--link);
+      animation:weather-spin 0.8s linear infinite;
+      flex:0 0 auto;
+    }
+    @keyframes weather-spin{ to{ transform:rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce){
+      .weather-spinner{ animation:none; }
+    }
+
+    .weather-error{
+      margin:18px 0;
+      padding:12px 14px;
+      border-radius:10px;
+      background:rgba(255,54,33,0.10);
+      border:1px solid rgba(255,54,33,0.30);
+      color:#ffb3a8;
+      font-size:0.92rem;
+    }
+
+    .weather-result{
+      margin-top:22px;
+      padding-top:20px;
+      border-top:1px solid var(--cardLine);
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:10px 22px;
+      align-items:center;
+    }
+
+    .weather-gauge{
+      --pct:0;
+      --gaugeColor:#64b5ff;
+      width:128px;
+      height:128px;
+      border-radius:50%;
+      background:conic-gradient(var(--gaugeColor) calc(var(--pct) * 3.6deg), rgba(255,255,255,0.08) 0);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      flex:0 0 auto;
+      grid-row: span 2;
+    }
+    .weather-gauge::before{
+      content:"";
+      position:absolute;
+      inset:9px;
+      border-radius:50%;
+      background:#0d1420;
+    }
+    .weather-gauge-inner{ position:relative; text-align:center; }
+    .weather-gauge-pct{
+      font-size:1.6rem;
+      font-weight:900;
+      letter-spacing:-0.01em;
+      display:block;
+    }
+    .weather-gauge-label{
+      font-size:0.66rem;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .weather-summary h4{ margin:0 0 4px; font-size:1.2rem; font-weight:900; }
+    .weather-summary .weather-verdict{
+      margin:0 0 12px;
+      font-size:0.98rem;
+      color:rgba(255,255,255,0.88);
+    }
+
+    .weather-chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+    .weather-chip{
+      background:rgba(255,255,255,0.05);
+      border:1px solid var(--cardLine);
+      border-radius:8px;
+      padding:7px 11px;
+      font-size:0.85rem;
+      color:rgba(255,255,255,0.85);
+    }
+    .weather-chip b{ color:#fff; }
+
+    .weather-official{
+      grid-column:1 / -1;
+      font-size:0.86rem;
+      color:var(--muted);
+      border-top:1px dashed var(--cardLine);
+      padding-top:12px;
+      margin-top:4px;
+    }
+
+    @media (max-width:560px){
+      .weather-result{ grid-template-columns:1fr; justify-items:center; text-align:center; }
+      .weather-gauge{ grid-row:auto; }
+      .weather-chip-row{ justify-content:center; }
+    }
   </style>
 </head>
 
@@ -268,6 +425,55 @@
     <h2 class="section-title">Interactive Dashboards</h2>
 
     <div class="grid">
+
+      <!-- NEW: Live Rain Forecast (interactive, client-side demo) -->
+      <div class="card weather-card">
+        <h3>🌦️ Rain Forecast — Try Any City</h3>
+        <p class="meta">Python (model training) · Open-Meteo API · Vanilla JS (live, client-side)</p>
+
+        <p class="lead" style="margin-bottom:10px;">
+          A companion to <a href="https://github.com/Ribeiroart1/rain-forecast-ml" target="_blank" rel="noopener">rain-forecast-ml</a>,
+          a Random Forest model trained from scratch per city on 10 years of Open-Meteo history — recent
+          rainfall, precipitation hours, and sunshine turned out to be its strongest signals. This widget
+          brings that same idea into the browser: type a city, and it pulls live data for that place and
+          scores it using those same signals, right here, with no server involved.
+        </p>
+
+        <div class="weather-form">
+          <input
+            type="text"
+            id="weatherCityInput"
+            class="weather-input"
+            placeholder="Type a city — Tokyo, London, São Paulo…"
+            autocomplete="off"
+            aria-label="City name"
+          />
+          <button id="weatherSubmitBtn" class="weather-submit" type="button">Get forecast</button>
+        </div>
+        <div class="weather-hint">Works for any city worldwide — data updates live from Open-Meteo.</div>
+
+        <div id="weatherStatus" class="weather-status" style="display:none;">
+          <span class="weather-spinner"></span>
+          <span id="weatherStatusText">Fetching data…</span>
+        </div>
+
+        <div id="weatherError" class="weather-error" style="display:none;"></div>
+
+        <div id="weatherResult" class="weather-result" style="display:none;">
+          <div class="weather-gauge" id="weatherGauge">
+            <div class="weather-gauge-inner">
+              <span class="weather-gauge-pct" id="weatherGaugePct">0%</span>
+              <span class="weather-gauge-label">rain chance</span>
+            </div>
+          </div>
+          <div class="weather-summary">
+            <h4 id="weatherCityName">—</h4>
+            <p class="weather-verdict" id="weatherVerdict"></p>
+          </div>
+          <div class="weather-chip-row" id="weatherChips"></div>
+          <div class="weather-official" id="weatherOfficial"></div>
+        </div>
+      </div>
 
       <!-- NEW FIRST PROJECT (LLM Static RAG) -->
       <div class="card">
@@ -447,5 +653,167 @@
       <div>📧 <a href="mailto:arthur10ribeiro@gmail.com">arthur10ribeiro@gmail.com</a></div>
     </footer>
   </div>
+
+  <script>
+    (function () {
+      var cityInput = document.getElementById("weatherCityInput");
+      var submitBtn = document.getElementById("weatherSubmitBtn");
+      var statusEl = document.getElementById("weatherStatus");
+      var statusText = document.getElementById("weatherStatusText");
+      var errorEl = document.getElementById("weatherError");
+      var resultEl = document.getElementById("weatherResult");
+      var gaugeEl = document.getElementById("weatherGauge");
+      var gaugePctEl = document.getElementById("weatherGaugePct");
+      var cityNameEl = document.getElementById("weatherCityName");
+      var verdictEl = document.getElementById("weatherVerdict");
+      var chipsEl = document.getElementById("weatherChips");
+      var officialEl = document.getElementById("weatherOfficial");
+
+      if (!cityInput || !submitBtn) return;
+
+      function setStatus(text) {
+        errorEl.style.display = "none";
+        resultEl.style.display = "none";
+        statusText.textContent = text;
+        statusEl.style.display = "flex";
+      }
+
+      function setError(text) {
+        statusEl.style.display = "none";
+        resultEl.style.display = "none";
+        errorEl.textContent = text;
+        errorEl.style.display = "block";
+      }
+
+      function clamp01(x) {
+        return Math.max(0, Math.min(1, x));
+      }
+
+      function average(arr) {
+        var valid = arr.filter(function (v) { return typeof v === "number" && !isNaN(v); });
+        if (!valid.length) return 0;
+        return valid.reduce(function (a, b) { return a + b; }, 0) / valid.length;
+      }
+
+      function weatherIcon(pct) {
+        if (pct >= 65) return "🌧️";
+        if (pct >= 35) return "🌦️";
+        return "☀️";
+      }
+
+      function gaugeColor(pct) {
+        if (pct >= 65) return "#64b5ff";
+        if (pct >= 35) return "#8cc7ff";
+        return "#ffb84d";
+      }
+
+      async function getForecast() {
+        var city = cityInput.value.trim();
+        if (!city) {
+          setError("Type a city name first.");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        setStatus("Looking up \"" + city + "\"...");
+
+        try {
+          var geoUrl = "https://geocoding-api.open-meteo.com/v1/search?name=" +
+            encodeURIComponent(city) + "&count=1&language=en&format=json";
+          var geoRes = await fetch(geoUrl);
+          var geoData = await geoRes.json();
+
+          if (!geoData.results || !geoData.results.length) {
+            setError("Couldn't find \"" + city + "\". Try a different spelling, or add a country (e.g. \"Springfield, USA\").");
+            submitBtn.disabled = false;
+            return;
+          }
+
+          var place = geoData.results[0];
+          var lat = place.latitude;
+          var lon = place.longitude;
+          var displayName = place.name + (place.country ? ", " + place.country : "");
+
+          setStatus("Fetching recent weather for " + displayName + "...");
+
+          var forecastUrl = "https://api.open-meteo.com/v1/forecast" +
+            "?latitude=" + lat + "&longitude=" + lon +
+            "&daily=temperature_2m_max,temperature_2m_min,rain_sum,precipitation_hours,sunshine_duration,precipitation_probability_max" +
+            "&past_days=3&forecast_days=2&timezone=auto";
+
+          var wRes = await fetch(forecastUrl);
+          var wData = await wRes.json();
+          var daily = wData.daily;
+
+          if (!daily || !daily.time || daily.time.length < 4) {
+            setError("Open-Meteo didn't return enough data for that location. Try another city.");
+            submitBtn.disabled = false;
+            return;
+          }
+
+          // past_days=3 & forecast_days=2 => [day-3, day-2, day-1(today), tomorrow]
+          var n = daily.time.length;
+          var idxToday = n - 2;
+          var idxTomorrow = n - 1;
+          var recentIdx = [idxToday - 2, idxToday - 1, idxToday].filter(function (i) { return i >= 0; });
+
+          var avgRain = average(recentIdx.map(function (i) { return daily.rain_sum[i]; }));
+          var avgHours = average(recentIdx.map(function (i) { return daily.precipitation_hours[i]; }));
+          var avgSun = average(recentIdx.map(function (i) { return daily.sunshine_duration[i]; }));
+
+          var rainScore = clamp01(avgRain / 15);
+          var hoursScore = clamp01(avgHours / 12);
+          var sunshineScore = 1 - clamp01(avgSun / 36000);
+
+          var modelPct = Math.round((rainScore * 0.5 + hoursScore * 0.35 + sunshineScore * 0.15) * 100);
+          var officialPct = daily.precipitation_probability_max ? daily.precipitation_probability_max[idxTomorrow] : null;
+
+          var tMax = daily.temperature_2m_max[idxTomorrow];
+          var tMin = daily.temperature_2m_min[idxTomorrow];
+
+          gaugeEl.style.setProperty("--pct", modelPct);
+          gaugeEl.style.setProperty("--gaugeColor", gaugeColor(modelPct));
+          gaugePctEl.textContent = modelPct + "%";
+
+          cityNameEl.textContent = weatherIcon(modelPct) + " " + displayName;
+
+          verdictEl.textContent = modelPct >= 65
+            ? "Rain looks likely tomorrow."
+            : modelPct >= 35
+              ? "Rain is possible tomorrow - could go either way."
+              : "Tomorrow looks mostly dry.";
+
+          chipsEl.innerHTML = "";
+          var chips = [
+            "Last 3 days rain: <b>" + avgRain.toFixed(1) + " mm/day avg</b>",
+            "Rain hours/day: <b>" + avgHours.toFixed(1) + " h</b>",
+            "Tomorrow: <b>" + Math.round(tMin) + "\u00B0 / " + Math.round(tMax) + "\u00B0C</b>"
+          ];
+          chips.forEach(function (text) {
+            var span = document.createElement("span");
+            span.className = "weather-chip";
+            span.innerHTML = text;
+            chipsEl.appendChild(span);
+          });
+
+          officialEl.textContent = officialPct !== null && officialPct !== undefined
+            ? "Open-Meteo's own forecast model puts tomorrow's rain probability at " + officialPct + "% - shown here alongside the pattern-based estimate above for comparison."
+            : "";
+
+          statusEl.style.display = "none";
+          resultEl.style.display = "grid";
+          submitBtn.disabled = false;
+        } catch (err) {
+          setError("Something went wrong reaching Open-Meteo. Please try again in a moment.");
+          submitBtn.disabled = false;
+        }
+      }
+
+      submitBtn.addEventListener("click", getForecast);
+      cityInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") getForecast();
+      });
+    })();
+  </script>
 </body>
 </html>
